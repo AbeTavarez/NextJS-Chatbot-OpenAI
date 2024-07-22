@@ -53,7 +53,7 @@ export default function Chatbot() {
           role: "assistant",
         };
 
-        setMessages([...messages, assistantMessage]);
+        setMessages(prevMessages => [...prevMessages, assistantMessage]);
       }
     } catch (error) {
       console.log("API Error", error);

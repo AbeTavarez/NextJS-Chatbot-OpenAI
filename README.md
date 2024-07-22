@@ -1,17 +1,26 @@
+![chatbot banner](./chatbot.png)
+
+# Chatbot with NextJS, TypeScript, TailwindCSS and OpenAI API.
+
+
+## Description
+
+This project is part of a YouTube Tutorial:
+
+There are two git branches, part 1 and part 2 for each of the following videos.  
+
+ - Part 1: [YouTube Link](https://youtu.be/gbZTEfo7BBo?si=QH-G9uNmqWT8yvue)
+
+ - Part 2: [YouTube Link](https://youtu.be/bx0oryJCpSk?si=NmZqwdRn3qlgAvDu)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+First, clone down the repo, then run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
