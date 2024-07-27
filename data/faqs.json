@@ -1,0 +1,45 @@
+{
+    "faqs": [
+      {
+        "question": "How do I reset my password?",
+        "answer": "To reset your password, go to the login page and click on 'Forgot Password'. Follow the instructions sent to your email to reset your password."
+      },
+      {
+        "question": "How can I contact customer support?",
+        "answer": "You can contact customer support via email at support@company.com or call us at 123-456-7890. Our support team is available from 9 AM to 5 PM, Monday to Friday."
+      },
+      {
+        "question": "What are your business hours?",
+        "answer": "Our business hours are from 9 AM to 5 PM, Monday to Friday."
+      },
+      {
+        "question": "How do I track my order?",
+        "answer": "To track your order, go to the 'Orders' section in your account dashboard and click on the 'Track Order' button next to the relevant order."
+      },
+      {
+        "question": "What is your return policy?",
+        "answer": "Our return policy allows you to return items within 30 days of receipt. Items must be in original condition and packaging. Contact customer support to initiate a return."
+      },
+      {
+        "question": "How do I update my account information?",
+        "answer": "To update your account information, log in to your account and go to the 'Account Settings' section. Here, you can update your personal information, email, and password."
+      },
+      {
+        "question": "Do you offer international shipping?",
+        "answer": "Yes, we offer international shipping. Shipping costs and delivery times vary depending on the destination. Please refer to our shipping policy page for more details."
+      },
+      {
+        "question": "How can I cancel my order?",
+        "answer": "To cancel your order, contact our customer support team as soon as possible. If the order has not yet been processed, we will cancel it for you."
+      },
+      {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept major credit cards, PayPal, and other payment methods as listed on our checkout page."
+      },
+      {
+        "question": "How do I apply a discount code?",
+        "answer": "To apply a discount code, enter the code in the 'Discount Code' field at checkout and click 'Apply'. The discount will be applied to your order total."
+      }
+    ]
+  }
+  
