@@ -1,23 +1,13 @@
 "use server";
 import OpenAI from "openai";
 import { Message } from "@/components/Chatbot/chatbot";
-import fs from "fs";
-import path from "path";
+import { fetchFAQS } from "./mongodb-actions";
+import { FAQDocument } from "@/types";
 
 const openAI = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// FAQ Type
-type FAQ = {
-  question: string;
-  answer: string;
-};
-
-// Reads the FAQs JSON File
-const filePath = path.resolve(process.cwd(), "data", "faqs.json");
-const faqs: FAQ[] = JSON.parse(fs.readFileSync(filePath, "utf-8")).faqs;
-console.log(faqs);
 
 /**
  * Chat Completion
@@ -28,8 +18,15 @@ export async function chatCompletion(chatMessages: Message[]) {
   try {
     console.log("FROM BACKEND", chatMessages);
 
+    // Fetch FAQS from DB
+    const document: FAQDocument | null = await fetchFAQS();
+
+    if (!document) {
+      throw new Error('Error fetching FAQS');
+    }
+
     // checking if the user question is in the FAQ array
-    const faqsAnswer = faqs.find((faq) =>
+    const faqsAnswer = document.faqs.find((faq) =>
       chatMessages
         .at(-1)
         ?.content.toLowerCase()
@@ -46,7 +43,7 @@ export async function chatCompletion(chatMessages: Message[]) {
     // Chat to be send to OPEN AI
     const chat = [
       { role: "system", content: "You are a helpful assistant" },
-      ...faqs.map((faq) => ({
+      ...document.faqs.map((faq) => ({
         role: "system",
         content: `Q: ${faq.question}\nA: ${faq.answer}`,
       })),
@@ -55,7 +52,7 @@ export async function chatCompletion(chatMessages: Message[]) {
 
     // Response
     const completion = await openAI.chat.completions.create({
-      messages: chat,
+      messages: chat as OpenAI.ChatCompletionMessageParam[],
       model: "gpt-4o-mini",
     });
 

@@ -1,5 +1,5 @@
 "use client";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useRef, useEffect } from "react";
 import { TbMessageChatbot } from "react-icons/tb";
 import BotMessage from "./ui/bot-message";
 import UserMessage from "./ui/user-message";
@@ -12,12 +12,23 @@ export type Message = {
 };
 
 export default function Chatbot() {
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
   const [showChat, setShowChat] = useState(false);
   const [userMessage, setUserMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: "Hello, how may I help you today?" },
   ]);
+
+  // Scroll to the bottom when messages changes
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages, loading]);
 
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
@@ -32,7 +43,10 @@ export default function Chatbot() {
 
     // Update the message state
     setMessages((prevMessage) => [...prevMessage, newMessage]);
+    
+    // set loading to true and clear input text
     setLoading(true);
+    setUserMessage("");
 
     // Request to OPENAI
     try {
@@ -43,10 +57,8 @@ export default function Chatbot() {
       // Call the chat completion API
       const res = await chatCompletion([...chatMessages, newMessage]);
       console.log("RESPONSE", res);
-      
-      setUserMessage("");
-      setMessages(prevMessages => [...prevMessages, res]);
-      
+
+      setMessages((prevMessages) => [...prevMessages, res]);
     } catch (error) {
       console.log("API Error", error);
     } finally {
@@ -72,7 +84,10 @@ export default function Chatbot() {
             </div>
 
             {/* CHAT CONTAINER  */}
-            <div className="flex flex-col flex-1 items-center p-2 mt-5 overflow-y-auto">
+            <div
+              ref={chatContainerRef}
+              className="flex flex-col flex-1 items-center p-2 mt-5 overflow-y-auto"
+            >
               {messages &&
                 messages.map((m, i) => {
                   return m.role === "assistant" ? (
@@ -81,6 +96,10 @@ export default function Chatbot() {
                     <UserMessage {...m} key={i} />
                   );
                 })}
+
+              {loading && (
+                <div className="text-center text-gray-500 mt-2">loading...</div>
+              )}
             </div>
 
             {/* MESSAGE INPUT  */}
