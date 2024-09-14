@@ -1,6 +1,7 @@
 "use client";
 import { FormEvent, useState, useRef, useEffect } from "react";
 import { TbMessageChatbot } from "react-icons/tb";
+import { clsx } from "clsx";
 import BotMessage from "./ui/bot-message";
 import UserMessage from "./ui/user-message";
 import ChatInput from "./ui/chat-input";
@@ -43,7 +44,7 @@ export default function Chatbot() {
 
     // Update the message state
     setMessages((prevMessage) => [...prevMessage, newMessage]);
-    
+
     // set loading to true and clear input text
     setLoading(true);
     setUserMessage("");
@@ -71,11 +72,16 @@ export default function Chatbot() {
       <TbMessageChatbot
         size={64}
         onClick={() => setShowChat(!showChat)}
-        className="fixed right-12 bottom-[calc(1rem)] hover:cursor-pointer"
+        className={clsx(
+          "fixed right-12 bottom-[calc(1rem)] hover:cursor-pointer hover:text-blue-400",
+          {
+            'animate-bounce': !showChat
+          },
+        )}
       />
 
       {showChat && (
-        <div className="fixed right-12 bottom-[calc(4rem+1.5rem)] border hover:cursor-pointer p-5 shadow-md shadow-white h-[474px] w-[500px]">
+        <div className="fixed right-12 bottom-[calc(4rem+1.5rem)] border hover:cursor-pointer p-5 shadow-md shadow-white h-[474px] w-[500px] bg-[#1e1e1e] rounded-md">
           <div className="flex flex-col h-full">
             {/* CHAT HEADER  */}
             <div>
